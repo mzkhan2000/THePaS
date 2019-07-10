@@ -11,12 +11,10 @@ import java.util.concurrent.TimeUnit;
 
 
 
-public class All_ENTITY_EXTRACTION {
+public class All_ENTITY_EXTRACTION_01 {
 
-	public List<String> Tails = new ArrayList<String>();
+	public List<String> Entity = new ArrayList<String>();
 	public List<String> Heads = new ArrayList<String>();
-	public List<String> Predicates = new ArrayList<String>();
-	public List<String> Line = new ArrayList<String>();
 	//public List<String> Subject = new ArrayList<String>();
 	//public List<String> NewRelation = new ArrayList<String>();
 	//public List<String> Object = new ArrayList<String>();
@@ -25,15 +23,13 @@ public class All_ENTITY_EXTRACTION {
 	public void READ_TRIPLES()
 		    throws IOException
 		    {
-		String strLine1, thing, lastline, type, subclass, line;
+		String strLine1, thing, lastline;
 		// ============================Open the file and read and load data=====================================
 				//Total line :28031876
 				//last line :# completed 2014-08-16T01:30:55Z
-				FileInputStream fstream1 = new FileInputStream("C:\\TENSOR MODELING\\NEW TERM\\DBPEDIA DATASET\\dbpedia_2016-10.nt");
+				//FileInputStream fstream1 = new FileInputStream("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/DBPedia Ontology Current/instance_types_en_28031876_28M.nt");
+				FileInputStream fstream1 = new FileInputStream("E:\\DBPedia Knowledge Graph\\DBPEDIA DATASET\\Creat DBPedia Dataset\\DBPedia Entities\\All_Thing_Entities_instance_types_en_307164.txt");
 				thing = " <http://dbpedia.org/ontology/Person";
-				type = " <http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-				subclass = " <http://www.w3.org/2000/01/rdf-schema#subClassOf";
-				
 				lastline = "# completed 2014-08-16T01:30:55Z";
 				
 				
@@ -58,34 +54,28 @@ public class All_ENTITY_EXTRACTION {
 	//	Entity.add("null");
 		int loop = 1;
 		//===================start read line======================
-		while (((strLine1 = br1.readLine()) != null) && (!strLine1.equals(lastline)) )   {
+		while (((strLine1 = br1.readLine()) != null) && (!strLine1.equals(lastline)) && (loop <100))   {
 			//=========================read before last line ============================
 			
 			String[] token = strLine1.split(delimiter);
 			//String[] tokens = strLine.split(delimiter);
 			String temp1 = token[0];
-			String temp2 = token[1];
+		//	String temp2 = token[1];
 			String temp3 = token[2];
 		//	String temp4 = token[3];
 			
 			//System.out.println(temp3);
 		//	System.out.println(thing);
-			if (subclass.equals(temp2)) {
-	 		    //System.out.println("Found the element");
+			if (thing.equals(temp3)) {
+	 		 //   System.out.println("Found the element");
 	 		    //EntityIDforSubject = Integer.toString(Entity.indexOf(temp1));
 	 		    //EntityIDforObject = Integer.toString(Entity.indexOf(temp3));
 	 		   //IDforNewPredicate = Integer.toString(NewPredicateID.indexOf(temp2));
 	 		    //Subject.add(EntityIDforSubject);
 	 		    //Object.add(EntityIDforObject);
 	 		   //NewRelation.add(IDforNewPredicate);
-				//head.add(temp1);
-				//tail.add(temp2);
-				//predicate.add(temp3);
-				//Line.add(strLine1);
-				//System.out.println(strLine1);
-				line = temp1 + ">"+ " " + temp2 + ">"+ " " + temp3 + ">";
-				Line.add(line);
-				//System.out.println(strLine1);
+				Entity.add(temp1);
+			//	System.out.println(temp1);
 			
 	 		} 
 		//		else 
@@ -127,9 +117,9 @@ public class All_ENTITY_EXTRACTION {
 		//System.out.println(" ============================ All Entity ID Read Complete============================");
 		//System.out.println(" ============================ All Entity ID Read Complete============================:" + n );
 		
-		FileWriter writer = new FileWriter("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/All_DBPedia_Subclass_Hierarchy.txt");
+		FileWriter writer = new FileWriter("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/Actor_instance_types_en.txt");
         int n=1;
-        for(String str : Line) {
+        for(String str : Entity) {
         	//
          // writer.write(str);
         // }
@@ -472,7 +462,7 @@ public class All_ENTITY_EXTRACTION {
 	      Runnable runnableTask1 = () -> {
 	    	    try {
 	    	    	try {
-	    	    		All_ENTITY_EXTRACTION f = new All_ENTITY_EXTRACTION();
+	    	    		All_ENTITY_EXTRACTION_01 f = new All_ENTITY_EXTRACTION_01();
 	    	   		 // f.READ_ENTITY();
 	    	     f.READ_TRIPLES();
 	    	   //  f.READ_HEADS_ALL();
