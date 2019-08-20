@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
-public class FindingAllEntitties_MultipleQuery_test{
+public class FindingAllEntitties_MultipleQuery_test3{
 
 
 	
@@ -47,8 +47,10 @@ public class FindingAllEntitties_MultipleQuery_test{
         //qExec.addParam("timeout", Constants.TIMEOUT_VALUE); 
         
 
-
+       List<String> load_data_all = new ArrayList<String>();
         // Execute Query
+       
+       
         int iCount = 0;
         ResultSet rs = qexec.execSelect();
         while (rs.hasNext()) {
@@ -68,9 +70,38 @@ public class FindingAllEntitties_MultipleQuery_test{
                 String szVal = qs.get(szVar).toString();
                 
                 //System.out.println("[" + szVar + "]: " + szVal);
-                System.out.println(szVal);
+              //  System.out.println(szVal);
+                load_data_all.add(szVal);
             }
-        }
+            
+            final String predicate = " <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ";
+            //final String object = "<http://dbpedia.org/class/yago/WikicatAmericanFilms>";
+            
+            final String object = "<http://dbpedia.org/class/yago/WikicatTelevisionActors>";
+          //  final String object = "<http://dbpedia.org/class/yago/WikicatAmericanActors>";
+           // WikicatAmericanActors
+            
+            final String newLine = System.getProperty("line.separator");
+            //FileWriter writer = new FileWriter("Relation_Triples_01.txt");
+            //FileWriter writer = new FileWriter("entity2id.txt");
+            FileWriter writer = new FileWriter("C:/DATASETS/DBPediaClass.txt");
+          //  int n=111;
+            for(String str : load_data_all) {
+            	//
+             // writer.write(str);
+            // }
+            	
+            	//writer.append("<"+str+">" + " " + predicate + " "+ object);
+            	writer.append("<"+str+">");
+            	//writer.append(iCount);
+            //	n++;
+            	writer.append(newLine);
+            	
+             }
+            writer.close();
+               
+        } //End of write output file. 
+        
     } // End of Method: queryEndpoint()
 
 
@@ -154,7 +185,8 @@ public class FindingAllEntitties_MultipleQuery_test{
     	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "select distinct ?Object where {?Subject ?Predicate ?Object filter(?Subject = rs:Arnold_Schwarzenegger && ?Predicate = ST:type)} LIMIT 5";
     	// =============================Step Four===================================
     	// ----------------------------Validate Property Type Relations of these incoming relations for this Instance---------------------------------
-    	String szQuery2= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <https://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Thing && ?Predicate = ST:type)} LIMIT 2800 OFFSET 18232";
+    	String szQuery= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <https://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Class && ?Predicate = ST:type)}";
+    	//String szQuery2= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <https://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Class && ?Predicate = ST:type)} LIMIT 10000 OFFSET 18232";
   //  String szQuery2= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <http://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Thing && ?Predicate = ST:type)} LIMIT 10 OFFSET 5606065";
     //String szQuery= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <http://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Thing && ?Predicate = ST:type)} LIMIT 10 OFFSET 5044221";
    // String szQuery= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <http://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Thing && ?Predicate = ST:type)} LIMIT 10 OFFSET 10";
@@ -244,65 +276,15 @@ public class FindingAllEntitties_MultipleQuery_test{
   
     	// // String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanActors>)} LIMIT 10000";
 
-//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanMaleActors>)} LIMIT 1000 OFFSET 5000";
-//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatActors>)} LIMIT 1000 OFFSET 18000";
-//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanMaleFilmActors>)} LIMIT 1000 OFFSET 9780";
-
-//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatFilmsByAmericanDirectors>)}";// LIMIT 1000 OFFSET 500";
-
-//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatTelevisionActors>)}";// LIMIT 1000 OFFSET 500";
+//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilms>)} LIMIT 10000 OFFSET 10000";
+//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilmActors>)}"; 
+ //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanActors>)}"; //WikicatAmericanActors
+ // String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanMaleFilmActors>)}";// LIMIT 1000 OFFSET 9780";   	
+ //String szQuery =	"SELECT ?film ?title ?name WHERE {  ?film wdt:P161 wd:Q35332 ; wdt:P57 ?director . ?director rdfs:label ?name .  ?film rdfs:label ?title .  FILTER LANGMATCHES(LANG(?title), "EN") FILTER LANGMATCHES(LANG(?name),  "EN")	}";
+    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilmDirectors>)} LIMIT 10000 OFFSET 7000";	
+    	String szQuery2 = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanTelevisionActors>)}";// LIMIT 10000 OFFSET 7000";
     	
-//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilmDirectors>)} LIMIT 1000 OFFSET 1000";
-
-  //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilmDirectors>)} LIMIT 10000 OFFSET 5300";
-
-  //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilmProducers>)} LIMIT 10000 OFFSET 3850";
- // String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatFilmProducers>)} LIMIT 10000 OFFSET 2190";
-//
-  
-  //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanFilmDirectors>)}  LIMIT 10000 OFFSET 5305";
-  // String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatFilmDirectors>)}"; // LIMIT 10000 OFFSET 2190";
-  
     	
-   //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanVoiceActors>)}  LIMIT 10000 OFFSET 1159";
-   //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatVoiceActors>)} LIMIT 10000 OFFSET 708";
-    	  
-   //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanMusicalTheatreActors>)}";
-    //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatMusicalTheatreActors>)}";// LIMIT 10000 OFFSET 708";
-    
-    //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatChildActors>)}";// LIMIT 10000 OFFSET 708";
-    //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanChildActors>)}";// LIMIT 10000 OFFSET 708";
-   
-    	
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanActionFilms>)} LIMIT 10000 OFFSET 335";
-        //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatActionFilms>)}"; // LIMIT 10000 OFFSET 07";
-        	   
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanAdventureFilms>)} LIMIT 1000 OFFSET 682";
-        //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAdventureFilms>)}"; // LIMIT 10000 OFFSET 11";
-        
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanComedyFilms>)} LIMIT 1000 OFFSET 3624";
-        //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatComedyFilms>)}"; // LIMIT 10000 OFFSET 24";
-        
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanHorrorFilms>)} LIMIT 1000 OFFSET 1190";
-        //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatHorrorFilms>)}"; // LIMIT 10000 OFFSET 16";
-        
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanMysteryFilms>)} LIMIT 1000 OFFSET 611";
-        //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatMysteryFilms>)}"; // LIMIT 10000 OFFSET 16";
-        
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanMusicalFilms>)} LIMIT 1000 OFFSET 474";
-        //String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatMusicalFilms>)}"; // LIMIT 10000 OFFSET 16";
-        
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanScienceFictionFilms>)} LIMIT 1000 OFFSET 376";
-//        String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatScienceFictionFilms>)}"; // LIMIT 10000 OFFSET 16";
-
-        
-    	//String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanAnimatedFilms>)} LIMIT 1000 OFFSET 676";
-      //  String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://dbpedia.org/class/yago/WikicatAmericanTelevisionFilms>)} LIMIT 10000 OFFSET 1500";
-     //   String szQuery= "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX SR: <https://www.w3.org/2002/07/owl#>  " + "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = SR:Class && ?Predicate = ST:type)}";
-        String szQuery = "PREFIX ST: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "PREFIX rs: <http://dbpedia.org/resource/> "  + "PREFIX t: <http://dbpedia.org/class/yago/> " +  "select distinct ?Subject where {?Subject ?Predicate ?Object filter(?Object = <http://www.w3.org/2002/07/owl#Class> && ?Predicate = <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>)} LIMIT 100";
-  
- //
-    	//String szQuery =	"SELECT ?film ?title ?name WHERE {  ?film wdt:P161 wd:Q35332 ; wdt:P57 ?director . ?director rdfs:label ?name .  ?film rdfs:label ?title .  FILTER LANGMATCHES(LANG(?title), "EN") FILTER LANGMATCHES(LANG(?name),  "EN")	}";
     	
         // Some Arguments here 
         if (args != null && args.length == 1) {
@@ -325,7 +307,7 @@ final String sz2 = szQuery2;
       Runnable runnableTask1 = () -> {
     	    try {
     	    	try {
-    	          	FindingAllEntitties_MultipleQuery_test q = new FindingAllEntitties_MultipleQuery_test();
+    	          	FindingAllEntitties_MultipleQuery_test3 q = new FindingAllEntitties_MultipleQuery_test3();
     	            //  q.queryEndpoint(szQuery, szEndpoint);
     	              q.queryEndpoint(sz, szEndpoint);
     	             // q.queryEndpoint(sz2, szEndpoint);

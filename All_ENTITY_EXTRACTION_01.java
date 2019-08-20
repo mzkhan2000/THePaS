@@ -454,6 +454,88 @@ public class All_ENTITY_EXTRACTION_01 {
 		//System.out.println(temp3);
 		} //  End of Read 
 	// =======================================End of Find Common =================================================================
+	public void READ_LINE()
+		    throws IOException
+		    {
+		
+		final String newLine = System.getProperty("line.separator");
+		// ============================Open the file and read and load data=====================================
+		FileInputStream fstream1 = new FileInputStream("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/Creat DBPedia Dataset/AllDBPediaEntities_from_instance_types_en_HEADS_5150433.txt");
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(fstream1));
+		//======================================================================================================
+		String strLine1;
+		int loop = 1;
+		//===================start read line======================
+		while (((strLine1 = br1.readLine()) != null))   {
+			Heads.add(strLine1);
+			loop = loop +1;	
+		}
+		//Close the input stream
+		br1.close();
+		
+		//============================ FileWriter start ============================
+		FileWriter writer = new FileWriter("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/Creat DBPedia Dataset/DBPedia_Entity_Head.txt");
+		
+        int n=1;
+        for(String str : Heads) {
+        	//
+         // writer.write(str);
+        // }
+        	
+        	//writer.append(str + " " +" "+ n);
+        	String temp = (str + ">");
+        	//String temp2 = (str + ">" + "  " + n);
+        	writer.append(temp);
+        	//writer2.append(temp2);
+        	//writer.append(iCount);
+        	n++;
+        	writer.append(newLine);
+        	
+         }
+        writer.close();
+      //============================ FileWriter close ============================
+        FileWriter writer2 = new FileWriter("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/Creat DBPedia Dataset/DBPedia_Entity_with_ID.txt");
+        int m=1;
+        for(String str : Heads) {
+        	//
+         // writer.write(str);
+        // }
+        	
+        	//writer.append(str + " " +" "+ n);
+        	//String temp = (str + ">");
+        	String temp2 = (str + ">" + "  " + m);
+        	//writer.append(temp);
+        	writer2.append(temp2);
+        	//writer.append(iCount);
+        	m++;
+        	writer2.append(newLine);
+        	
+         }
+        writer2.close();
+        //============================ FileWriter close ============================
+      //============================ FileWriter close ============================
+        FileWriter writer3 = new FileWriter("C:/TENSOR MODELING/NEW TERM/DBPEDIA DATASET/Creat DBPedia Dataset/DBPedia_Entity_with_ID_S.txt");
+        int p=1;
+        for(String str : Heads) {
+        	//
+         // writer.write(str);
+        // }
+        	
+        	//writer.append(str + " " +" "+ n);
+        	//String temp = (str + ">");
+        	String temp3 = (p + "  " + "  " + str + ">");
+        	//writer.append(temp);
+        	writer3.append(temp3);
+        	//writer.append(iCount);
+        	p++;
+        	writer3.append(newLine);
+        	
+         }
+        writer3.close();
+        //============================ FileWriter close ============================
+        System.out.println(" ============================ All Entity ID Read Complete============================");
+		System.out.println(loop);
+		} //=======================  End of REAR_LINE method==================== 
 	
 	public static void main(String[] args) throws IOException {
 		  
@@ -464,10 +546,11 @@ public class All_ENTITY_EXTRACTION_01 {
 	    	    	try {
 	    	    		All_ENTITY_EXTRACTION_01 f = new All_ENTITY_EXTRACTION_01();
 	    	   		 // f.READ_ENTITY();
-	    	     f.READ_TRIPLES();
+	    	    // f.READ_TRIPLES();
 	    	   //  f.READ_HEADS_ALL();
 	    	         //  f.Read_R_IDs();
 	    	         //  f.Check_n_Output_data();
+	    	    		f.READ_LINE();
 	    	          }
 	    	          catch (Exception ex) {
 	    	              System.err.println(ex);
